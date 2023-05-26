@@ -1,0 +1,20 @@
+```jsx
+import { usePropsEditor } from 'react-showroom/client';
+
+const Demo = () => {
+  const propsEditor = usePropsEditor({
+    initialProps: {
+      variant: 'secondary',
+      rounded: 'sm',
+    },
+  });
+
+  return (
+    <Button {...propsEditor.props} onClick={() => console.log('Clicked')}>
+      Hello
+    </Button>
+  );
+};
+
+<Demo />;
+```

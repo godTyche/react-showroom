@@ -1,0 +1,18 @@
+```jsx
+import { usePropsEditor } from 'react-showroom/client';
+
+const Demo = () => {
+  const propsEditor = usePropsEditor();
+
+  return (
+    <Button {...propsEditor.props} onClick={() => console.log('Clicked')}>
+      Hello
+    </Button>
+  );
+};
+
+<div>
+  <Demo />
+  <p>Click the "Props" button below to view the controls for props.</p>
+</div>;
+```

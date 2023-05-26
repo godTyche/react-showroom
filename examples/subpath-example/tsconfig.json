@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ES2017",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "isolatedModules": true,
+        "baseUrl": "src",
+        "paths": {
+            "@components": ["components"]
+        }
+    },
+    "include": ["src"],
+}

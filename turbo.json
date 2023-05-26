@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "dist-esm/**", "client-dist/**", "build/**"]
+    },
+    "build-showroom": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        "showroom/**",
+        "showroom-spa/**",
+        "public/no-prerender/**",
+        "public/some-subpath/**"
+      ]
+    },
+    "test:ci": {
+      "dependsOn": [],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx"]
+    },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}

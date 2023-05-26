@@ -1,0 +1,201 @@
+import { Button } from './button';
+
+```jsx frame initialHeight=46 initialWidth=375
+import { usePropsEditor } from 'react-showroom/client';
+import { PencilIcon, PlusIcon } from '@heroicons/react/solid';
+
+const EditIcon = <PencilIcon width={20} height={20} />;
+
+const Demo = () => {
+  const propsEditor = usePropsEditor({
+    initialProps: {
+      children: 'Hello',
+    },
+    controls: {
+      className: {
+        type: 'text',
+      },
+      children: {
+        type: 'text',
+      },
+      disabled: {
+        type: 'checkbox',
+      },
+      style: {
+        type: 'object',
+      },
+      color: {
+        type: 'color',
+      },
+      leftIcon: {
+        type: 'select',
+        options: [
+          {
+            label: 'EditIcon',
+            value: EditIcon,
+          },
+          {
+            label: 'PlusIcon',
+            value: <PlusIcon width={20} height={20} />,
+          },
+        ],
+      },
+    },
+  });
+
+  return (
+    <div data-testid="props-editor-example">
+      <Button {...propsEditor.props} />
+    </div>
+  );
+};
+
+<Demo />;
+```
+
+<Button variant="primary">Hi</Button>
+
+## Variants
+
+```jsx
+<div className="flex items-center gap-3">
+  <Button>Hello</Button>
+  <Button variant="primary">Primary</Button>
+  <Button variant="outline">Outline</Button>
+</div>
+```
+
+Use `useUnionProps` to render the component with different value of an union prop.
+
+```jsx
+import { useUnionProps } from 'react-showroom/client';
+
+const AllVariants = () => {
+  const variants = useUnionProps('variant');
+  const fullWidthOptions = useUnionProps('fullWidth');
+
+  return (
+    <div className="flex flex-col gap-3">
+      {fullWidthOptions.map((option) => (
+        <div className="flex flex-col gap-3" key={option.value}>
+          {variants.map((v) => (
+            <div key={v.value}>
+              <Button variant={v.value} fullWidth={option.value}>
+                {v.label} {option.value ? '(fullWidth)' : ''}
+              </Button>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+<AllVariants />;
+```
+
+## Static Example
+
+Following is a static example.
+
+```jsx static
+import { Button } from 'components';
+
+<Button>Static</Button>;
+```
+
+## Example that fetch data
+
+```jsx frame
+const Example = () => {
+  const [result, setResult] = React.useState('');
+
+  return (
+    <div>
+      <Button
+        onClick={() =>
+          fetch('/hello')
+            .then((res) => res.json())
+            .then((data) => setResult(data.message))
+        }
+        variant="primary"
+      >
+        Fetch Data
+      </Button>
+      <div>
+        Result:
+        <output>{result}</output>
+      </div>
+    </div>
+  );
+};
+
+render(<Example />);
+```
+
+## Using `wrapper` example
+
+`react-query` relies on `ReactQueryClientProvider` being rendered in at root of the application using `wrapper`.
+
+```jsx
+import { useQuery } from 'react-query';
+
+const Example = () => {
+  const [enabled, setEnabled] = React.useState(false);
+
+  const { data: result } = useQuery(
+    'hello',
+    () => fetch('/hello').then((res) => res.json()),
+    {
+      select: (data) => data.message,
+      enabled,
+    }
+  );
+
+  return (
+    <div>
+      <Button onClick={() => setEnabled(true)} variant="primary">
+        Fetch Data
+      </Button>
+      <div>
+        Result:
+        <output>{result}</output>
+      </div>
+    </div>
+  );
+};
+
+render(<Example />);
+```
+
+## Log Message
+
+Calling `console.log`, `console.info`, `console.warn`, `console.error` in the example will log the result in a separate panel.
+
+```tsx frame
+const map = new Map();
+map.set('React', 'react');
+map.set('Angular', 'ng');
+
+const Example = () => (
+  <div className="flex flex-wrap gap-3">
+    <Button variant="primary" onClick={() => console.log('I am clicked!')}>
+      Log Msg
+    </Button>
+    <Button
+      variant="primary"
+      onClick={() => console.info(true, ['huhu', undefined])}
+    >
+      Info Multiple
+    </Button>
+    <Button variant="outline" onClick={() => console.error(new Date())}>
+      Error
+    </Button>
+    <Button variant="outline" onClick={() => console.warn(map)}>
+      Warn
+    </Button>
+  </div>
+);
+
+<Example />;
+```

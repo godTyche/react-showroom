@@ -1,0 +1,106 @@
+Manually call `render` if you want to add some operations before rendering the output.
+
+```tsx
+const wait = (ms: number) => new Promise((fulfill) => setTimeout(fulfill, ms));
+
+wait(1000).then(() => render(<Button>Delayed</Button>));
+```
+
+Importing third party libraries work as well as long as they are installed in your project.
+
+If user add additional import statement in live editor, they will be loaded from [Skypack](https://www.skypack.dev/) on the fly.
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+const FormExample = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="space-x-2">
+        <label htmlFor="firstName">First Name</label>
+        <input type="text" defaultValue="John" {...register('firstName')} />
+      </div>
+      <div className="space-x-2">
+        <label htmlFor="lastName">Last Name</label>
+        <input type="text" {...register('lastName', { required: true })} />
+        {errors.lastName && <span>This field is required</span>}
+      </div>
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+};
+
+<FormExample />;
+```
+
+Use `fileName` modifier to add a file name at the top of the code block.
+
+```tsx fileName="code.tsx"
+import * as React from 'react';
+
+const Example = () => {
+  const [on, setOn] = React.useState<boolean>(false);
+
+  return <Button onClick={() => setOn(!on)}>{on ? 'On' : 'Off'}</Button>;
+};
+
+<Example />;
+```
+
+For code blocks with `frame`, by default we will adjust the given height based on the rendered content.
+
+You can overwrite the height (fixed), initial height (initial iframe height while waiting the content to be rendered), and initial width using `height`, `initialHeight`, and `initialWidth` modifiers respectively.
+
+```tsx frame height=100
+<Button>Height: 100</Button>
+```
+
+```tsx frame initialHeight=48
+<Button>Initial Height: 48</Button>
+```
+
+```tsx frame initialWidth=400
+<Button>Initial Width: 400</Button>
+```
+
+Use `noEditor` modifier to show only the output result.
+
+```tsx noEditor
+import * as React from 'react';
+
+const Example = () => {
+  const [on, setOn] = React.useState<boolean>(false);
+
+  return <Button onClick={() => setOn(!on)}>{on ? 'On' : 'Off'}</Button>;
+};
+
+<Example />;
+```
+
+Use `static` modifier to show static code.
+
+```tsx static
+<Button>Hello</Button>
+```
+
+For static code blocks, you can use `highlights` to highlight specific lines.
+
+```tsx static highlights={3-7}
+import * as React from 'react';
+
+const Example = () => {
+  const [on, setOn] = React.useState<boolean>(false);
+
+  return <Button onClick={() => setOn(!on)}>{on ? 'On' : 'Off'}</Button>;
+};
+
+<Example />;
+```

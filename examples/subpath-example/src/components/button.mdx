@@ -1,0 +1,76 @@
+```jsx
+import { usePropsEditor } from 'react-showroom/client';
+
+const Demo = () => {
+  const propsEditor = usePropsEditor();
+
+  return <Button {...propsEditor.props}>Button</Button>;
+};
+
+<Demo />;
+```
+
+```jsx
+<div>
+  <Button onClick={() => console.log('Hello!')}>Hello</Button>
+  <Button variant="primary" onClick={() => console.log('Wuha')}>
+    Primary
+  </Button>
+  <Button variant="outline" onClick={() => console.log('Whurt')}>
+    Outline
+  </Button>
+</div>
+```
+
+## Static Example
+
+Following is a static example.
+
+```jsx static
+<Button>Static</Button>
+```
+
+## Example that fetch data
+
+```jsx
+const Example = () => {
+  const [result, setResult] = React.useState('');
+
+  return (
+    <div>
+      <Button
+        onClick={() =>
+          fetch('/hello')
+            .then((res) => res.json())
+            .then((data) => setResult(data.message))
+        }
+        variant="primary"
+      >
+        Fetch Data
+      </Button>
+      <div>
+        Result:
+        <output>{result}</output>
+      </div>
+    </div>
+  );
+};
+
+render(<Example />);
+```
+
+## IFrame Example
+
+```tsx frame
+import { Button } from '@components';
+
+<div>
+  <Button>Hello</Button>
+  <Button variant="primary">Primary</Button>
+  <Button variant="outline">Outline</Button>
+</div>;
+```
+
+## Random Markdown Content
+
+![Icon](/some-subpath/react-showroom.png)

@@ -1,0 +1,125 @@
+---
+description: Learn how to document components with React Showroom
+---
+
+import {
+  DocumentingComponentPropsSource,
+  DocumentingComponentPropsResult,
+  DocumentingComponentCommentsSource,
+  DocumentingComponentCommentsResult,
+  DeprecatedExampleSource,
+  DeprecatedExampleResult,
+  MarkdownSource,
+  MarkdownResult,
+  AnotherMarkdownSource,
+  AnotherMarkdownResult,
+  UnionPropsSource,
+  UnionPropsResult,
+} from './documenting-components';
+
+# Documenting Components
+
+React Showroom generates documentations for your components based on type definition of your components, the comments on the type definitions, and markdown file.
+
+## Documenting Component Props
+
+Declare your component props as usual in TypeScript:
+
+<DocumentingComponentPropsSource />
+
+And the following will be generated:
+
+<DocumentingComponentPropsResult />
+
+## Comments for Component and Props
+
+To provide more descriptions to the props and the comment itself, you can add JSDoc style comments.
+
+<DocumentingComponentCommentsSource />
+
+And the documentations will be reflected.
+
+<DocumentingComponentCommentsResult />
+
+JSDoc tags will be parsed and displayed as well.
+
+<DeprecatedExampleSource />
+
+will results in
+
+<DeprecatedExampleResult />
+
+## Show Usages with Markdown
+
+To show usage examples for the component, create a `.mdx` file next to the component with the same name as the component file.
+
+<MarkdownSource />
+
+will produces the following output.
+
+<MarkdownResult />
+
+<span className="block md:hidden">
+  Open the hamburget menu and choose view as Designer to see the technical
+  details hidden.
+</span>
+
+<span className="hidden md:block">
+  Click the toggle Switch on the Sidebar to see the technical details hidden.
+</span>
+
+This is handy for non-technical audience (designer/business) to view the site.
+
+Few things to take note:
+
+1. You must tag the code block with `tsx` or `jsx` for it to become live example.
+1. If the last expression in your code block is a JSX, that will be the displayed result of the example.
+1. The component is automatically injected into the scope, so you doesn't need to import it.
+1. `React` is automatically injected into the scope as well, but it's fine if you want to import it.
+
+A few scenarios for code blocks:
+
+<AnotherMarkdownSource />
+
+And the result:
+
+<AnotherMarkdownResult />
+
+## Show Different Variants
+
+A common use case is to show different variants of the component side-by-side so they can be compared visually.
+
+You can, of course, render the component by passing different props to it in an example to do that.
+
+However, you need to maintain the example so any changes to the props will be reflected in the example.
+
+Another options is to use the `useUnionProps` custom hook (available in `react-showroom/client`), which provide the variants (parsed from the props type definition) as options to your examples.
+
+<UnionPropsSource />
+
+<UnionPropsResult />
+
+## Collaboration Tips
+
+React Showroom is developed with helping collaborations in mind, and the following are some tips to use it effectively.
+
+### Use Standalone View to Share Particular Example/Snapshot
+
+All examples will generates a standalone view (which can be opened with the "Standalone" button at bottom right).
+
+```jsx frame live initialHeight=68
+<div>
+  <h1 className="text-3xl font-extrabold">I am an example</h1>
+  <p>Click the Standalone button at bottom right.</p>
+</div>
+```
+
+1. The standalone view has its own URL that you can share with others.
+1. In the standalone view, you can update the code or update the props (for [Component Playground](/getting-started/component-playground)) and those changes will be persisted in the URL.
+1. You can also add comment on particular point of the example, and those will be persisted in the URL as well. For example, try open this <a href="/getting-started/documenting-components/_standalone/0336e30d0e28a49a31427f3cd9d8f877?commentMode=true&comments=NobwRALgpgHhYC4wBUAWBLAzgAmnbANgPZEDWOA5gE5QCGEAhGADRgBeJAtgDJQBuUAojAB2AKwswGACbSoAOwDK6NlEyJgAXVYEoAM3gIALAE4AHKwhEADogBsZgHQAGAIxi7AJjGtMqIgDuAGJUtJxQiBBUAK5QrOjSws4AzMl2UMnO0s5Qnma0prTJrkaeInrJAMbSJtJmemYiIgC0rnZGzibeJilGdi3OYAC%2BmkA" className="text-green-600 hover:underline">link</a>.
+
+### Use the Accessibility Check Result to Discuss Accessibility Issues
+
+The accessibility check result (powered by [axe-core](https://github.com/dequelabs/axe-core)) is a good starting point to discuss about accessibility issues of your components/designs.
+
+You can highlight the elements in the example by checking the "Highlight" checkbox.
